@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\zsaluzasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +21,18 @@ Route::get('users', [ApiUserController::class,'index'])->name('api.users');
 
 Route::post('login',[ApiUserController::class,'login'])->name('api.login');
 Route::post('register',[ApiUserController::class,'register'])->name('api.register');
+Route::get('/zsaluzas', [zsaluzasController::class, 'zsaluzas']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
 
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::patch('/task/{task}/status', [TaskController::class,'changeStatus'])->name('api.tasks.status');
     Route::post('/task/{task}/restore', [TaskController::class,'restore'])->name('api.tasks.restore');
+
 
     //Route::get('/tasks', [TaskController::class,'index']);
 
